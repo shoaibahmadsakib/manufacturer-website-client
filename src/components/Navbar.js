@@ -1,18 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { AuthStateHook, useAuthState, } from "react-firebase-hooks/auth";
+import auth from "../firebase.init";
+import { signOut } from 'firebase/auth';
 
 const Navbar = () => {
+  const [user] = useAuthState(auth);
   const navItem = (
     <>
       <li>
         <Link to="/">home</Link>
       </li>
       <li>
-      <Link to="/about">About</Link>
+        <Link to="/about">About</Link>
       </li>
-      <li>
-      <Link to="/Login">Login</Link>
-      </li>
+      {user ? (
+        <li>
+          <button className="btn btn-primary" onClick={()=>signOut(auth)}>
+           Log out
+          </button>
+        </li>
+      ) : (
+        <li>
+          <Link to="/signin" className="btn btn-accent">
+            Sign in
+          </Link>
+        </li>
+      )}
     </>
   );
 
@@ -46,9 +60,7 @@ const Navbar = () => {
         <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
       </div>
       <div class="navbar-end hidden lg:flex">
-        <ul class="menu menu-horizontal p-0">
-        {navItem}
-        </ul>
+        <ul class="menu menu-horizontal p-0">{navItem}</ul>
       </div>
     </div>
   );
