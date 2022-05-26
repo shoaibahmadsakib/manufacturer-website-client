@@ -7,7 +7,7 @@ const MyOrders = () => {
   const [user, loading] = useAuthState(auth);
   
   useEffect(() => {
-    const url = `http://localhost:5000/order`;
+    const url = `https://dry-ravine-60510.herokuapp.com/order`;
     fetch(url,{
       method: 'GET',
       headers: {

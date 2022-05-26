@@ -14,7 +14,7 @@ const OrderField = ({ total,productName }) => {
     const quantity = event.target.quantity.value;
     if (quantity > 5 && quantity < total) {
       const totalInfo = { email, productName, number, quantity };
-      fetch("http://localhost:5000/order", {
+      fetch("https://dry-ravine-60510.herokuapp.com/order", {
         method: "POST",
         headers: {
           "content-type": "application/json",

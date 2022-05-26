@@ -18,7 +18,7 @@ const MyProfile = () => {
   } = useForm();
 
   useEffect(() => {
-    const url = `http://localhost:5000/profile`;
+    const url = `https://dry-ravine-60510.herokuapp.com/profile`;
     fetch(url, {
       method: "GET",
       headers: {
@@ -40,7 +40,7 @@ const MyProfile = () => {
     const city = data.city;
     const linkedin = data.linkedin;
 
-    fetch(`http://localhost:5000/profile/${user?.email}`, {
+    fetch(`https://dry-ravine-60510.herokuapp.com/profile/${user?.email}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

@@ -31,7 +31,7 @@ const AddItem = () => {
             describtion: data.details,
             picture: img,
           };
-          fetch("http://localhost:5000/tools", {
+          fetch("https://dry-ravine-60510.herokuapp.com/tools", {
             method: "POST",
             headers: {
               "content-type": "application/json",

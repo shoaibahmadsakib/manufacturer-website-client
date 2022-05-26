@@ -4,7 +4,7 @@ const MakeAdmin = () => {
   const [allAdmin, setAlladmin] = useState([]);
 
   useEffect(() => {
-    const url = `http://localhost:5000/user`;
+    const url = `https://dry-ravine-60510.herokuapp.com/user`;
     fetch(url, {
       method: "GET",
       headers: {

@@ -4,7 +4,7 @@ const ManageOrder = () => {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-      const url = `http://localhost:5000/order`;
+      const url = `https://dry-ravine-60510.herokuapp.com/order`;
       fetch(url, {
         method: "GET",
         headers: {

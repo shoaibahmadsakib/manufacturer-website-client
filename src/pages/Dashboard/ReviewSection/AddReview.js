@@ -8,7 +8,7 @@ const AddReview = () => {
     const rating = event.target.rating.value;
 
     const totalInfo = { rating, comment };
-    fetch("http://localhost:5000/review", {
+    fetch("https://dry-ravine-60510.herokuapp.com/review", {
       method: "POST",
       headers: {
         "content-type": "application/json",

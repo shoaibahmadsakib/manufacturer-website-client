@@ -4,7 +4,7 @@ import CardSection from "./CardSection";
 const CardCompo = () => {
   const [tools, setTools] = useState([]);
   useEffect(() => {
-    const url = "http://localhost:5000/tools";
+    const url = "https://dry-ravine-60510.herokuapp.com/tools";
     fetch(url)
       .then((res) => res.json())
       .then((data) => setTools(data));

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const MyPortfolio = () => {
     const [myData,setMydata] = useState([])
   useEffect(() => {
-    fetch("http://localhost:5000/biodata")
+    fetch("https://dry-ravine-60510.herokuapp.com/biodata")
       .then((res) => res.json())
       .then((data) => setMydata(data));
      

@@ -9,7 +9,7 @@ const PlaceOrder = () => {
   const [user] = useAuthState(auth);
 
   useEffect(() => {
-    const url = `http://localhost:5000/tools/${id}`;
+    const url = `https://dry-ravine-60510.herokuapp.com/tools/${id}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setInfo(data));

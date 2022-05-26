@@ -5,7 +5,7 @@ const ManageProduct = () => {
   const [deletingDoctor, setDeletingDoctor] = useState(null);
 
   useEffect(() => {
-    const url = `http://localhost:5000/tools`;
+    const url = `https://dry-ravine-60510.herokuapp.com/tools`;
     fetch(url, {
       method: "GET",
       headers: {
@@ -22,7 +22,7 @@ const ManageProduct = () => {
    
     const confirmDelete = window.confirm("are you sure to delete it?");
     if (confirmDelete) {
-      const url = `http://localhost:5000/tools/${id}`;
+      const url = `https://dry-ravine-60510.herokuapp.com/tools/${id}`;
       fetch(url, {
         method: "DELETE",
       })

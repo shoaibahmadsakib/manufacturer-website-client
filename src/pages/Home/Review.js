@@ -6,7 +6,7 @@ const Review = () => {
   const [user] = useAuthState(auth)
   const [review, setReview] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/review`)
+    fetch(`https://dry-ravine-60510.herokuapp.com/review`)
       .then((res) => res.json())
       .then((data) => setReview(data));
   }, []);
