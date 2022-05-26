@@ -9,7 +9,6 @@ const AddItem = () => {
     handleSubmit,
     reset,
   } = useForm();
-
   const imageStorageKey = "633fed2860fa142b2c03067d872fd805";
 
   const onSubmit = async (data) => {
