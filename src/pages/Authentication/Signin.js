@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
@@ -13,6 +13,7 @@ const Signin = (props) => {
   } = useForm();
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
+    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
 
   const [token] = useToken(user);
 
@@ -20,6 +21,9 @@ const Signin = (props) => {
   const navigate = useNavigate();
   const from = location?.state?.from?.pathname || "/";
 
+  const handleGoogleSignIn =()=>{
+    signInWithGoogle()
+  }
   useEffect(() => {
     if (token) {
       navigate(from, { replace: true });
@@ -113,7 +117,7 @@ const Signin = (props) => {
               </small>
             </p>
             <div className="divider">OR</div>
-            {/* <button onClick={handleGoogleSignIn}>google sign in</button> */}
+            <button onClick={handleGoogleSignIn}>google sign in</button>
           </div>
         </div>
       </div>
