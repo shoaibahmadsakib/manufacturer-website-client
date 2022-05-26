@@ -6,20 +6,28 @@ import { signOut } from "firebase/auth";
 
 const Navbar = () => {
   const [user] = useAuthState(auth);
+
+  const logOut =()=>{
+    signOut(auth)
+    localStorage.removeItem('accessToken')
+  }
   const navItem = (
     <>
       <li>
         <Link to="/">home</Link>
       </li>
       <li>
-        <Link to="/about">About</Link>
+        <Link to="/blog">Blog</Link>
       </li>
       <li>
         <Link to="/dashboard">Dashboard</Link>
       </li>
+      <li>
+        <Link to="/myportfolio">profile</Link>
+      </li>
       {user ? (
         <li>
-          <button className="btn btn-primary" onClick={() => signOut(auth)}>
+          <button className="btn btn-primary" onClick={logOut}>
             Log out
           </button>
         </li>
@@ -61,7 +69,9 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
+       <Link to='/'>
+       <a class="btn btn-ghost normal-case text-xl">Urgent manufacturer</a>
+       </Link> 
       </div>
        {/* for dashboard */}
        <div class="navbar-end ">

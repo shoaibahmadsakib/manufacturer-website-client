@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Loading from "../../components/Loading";
 import auth from "../../firebase.init";
+import useToken from "../../hooks/useToken";
 const Signin = (props) => {
   const {
     register,
@@ -11,14 +13,24 @@ const Signin = (props) => {
   } = useForm();
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
+
+  const [token] = useToken(user);
+
   const location = useLocation();
   const navigate = useNavigate();
   const from = location?.state?.from?.pathname || "/";
 
+  useEffect(() => {
+    if (token) {
+      navigate(from, { replace: true });
+    }
+  }, [token, from, navigate]);
+  if (loading) {
+    return <Loading></Loading>;
+  }
   const onSubmit = async (data) => {
     console.log(data);
     await signInWithEmailAndPassword(data.email, data.password);
-    navigate(from, { replace: true });
   };
   return (
     <div>
@@ -46,7 +58,6 @@ const Signin = (props) => {
                     },
                   })}
                 />
-               
               </div>
               <div className="form-control w-full max-w-xs">
                 <label className="label">

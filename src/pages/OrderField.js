@@ -1,21 +1,41 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
+import auth from "../firebase.init";
+const OrderField = ({ total,productName }) => {
+  const [user] = useAuthState(auth);
 
-const OrderField = ({total}) => {
+
   const placeOrderClick = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
-    const name = event.target.name.value;
+    const productName = event.target.name.value;
     const number = event.target.number.value;
     const quantity = event.target.quantity.value;
-    if(quantity >5 && quantity<total){
-        console.log(email,name,number,quantity);
+    if (quantity > 5 && quantity < total) {
+      const totalInfo = { email, productName, number, quantity };
+      fetch("http://localhost:5000/order", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify( totalInfo ),
+      })
+        .then((res) => res.json())
+        .then(data => {
+          if(data.success){
+            console.log(data);
+              toast("success")
+          }
+          else{
+              toast.error("failed")
+          }
+        
+      });
     }
-   
   };
   return (
-
     <div class="card-body">
-      
       <form action="" onSubmit={placeOrderClick}>
         <div class="form-control">
           <label class="label">
@@ -24,6 +44,8 @@ const OrderField = ({total}) => {
           <input
             name="email"
             type="text"
+            disabled
+            value={user?.email || ""}
             placeholder="email"
             class="input input-bordered"
           />
@@ -33,6 +55,7 @@ const OrderField = ({total}) => {
           <input
             name="name"
             type="text"
+            value={productName}
             placeholder="name"
             class="input input-bordered"
           />
@@ -56,7 +79,6 @@ const OrderField = ({total}) => {
             name="quantity"
             type="number"
             placeholder="number"
-           
             class="input input-bordered"
           />
         </div>

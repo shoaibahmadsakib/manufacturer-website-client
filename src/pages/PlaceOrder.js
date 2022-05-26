@@ -57,7 +57,7 @@ const PlaceOrder = () => {
             </div>
           </div>
           <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-           <OrderField total={quentity}/>
+           <OrderField total={quentity} productName ={name}/>
           </div>
         </div>
       </div>

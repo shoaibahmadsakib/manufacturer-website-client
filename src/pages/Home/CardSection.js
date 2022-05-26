@@ -14,13 +14,13 @@ const CardSection = ({data}) => {
           className="h-72"
         />
       </figure>
-      <div class="card-body">
+      <div class="card-body text-left">
         <h2 class="card-title">
           {name}
          
         </h2>
         <p>{describtion?.slice(0, 50).concat("...")}</p>
-        <div class="card-actions justify-end">
+        <div class="card-actions justify-start">
           <div class="badge badge-outline">Total Piece: {quentity}</div>
           <div class="badge badge-outline"> minimum order:{minimunOrder}</div>
         </div>

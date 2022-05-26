@@ -6,7 +6,9 @@ import {
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
-import Loader from "../../components/Loading";
+
+import useToken from "../../hooks/useToken";
+import Loading from "../../components/Loading";
 
 const SignUp = () => {
   const [createUserWithEmailAndPassword, user, loading, error] =
@@ -18,15 +20,17 @@ const SignUp = () => {
     handleSubmit,
   } = useForm();
 
+  const [token] = useToken(user);
+
   const navigate = useNavigate();
   useEffect(() => {
-    if (user) {
+    if (token) {
       navigate("/");
     }
-  }, [user]);
+  }, [token]);
   // validation
   if (loading) {
-    return <Loader></Loader>;
+    return <Loading></Loading>;
   }
 
   if (error) {
@@ -34,7 +38,7 @@ const SignUp = () => {
       <small>{error?.message}</small>
     </p>;
   }
-
+ 
   const onSubmit = async (data) => {
     console.log(data);
     await createUserWithEmailAndPassword(data.email, data.password);

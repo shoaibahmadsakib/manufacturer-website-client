@@ -1,56 +1,42 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Rating from "react-rating";
+import auth from "../../firebase.init";
 const Review = () => {
+  const [user] = useAuthState(auth)
+  const [review, setReview] = useState([]);
+  useEffect(() => {
+    fetch(`http://localhost:5000/review`)
+      .then((res) => res.json())
+      .then((data) => setReview(data));
+  }, []);
   return (
     <div className="py-10">
-         <h2 className="text-center text-4xl font-bold uppercase py-10">
-       Review
-      </h2>
-      <div class="card w-96 bg-base-100 shadow-xl">
-        <div class="avatar justify-center p-10">
-          <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-            <img src="https://api.lorem.space/image/face?hash=3174" />
+      <h2 className="text-center text-4xl font-bold uppercase py-10">Review</h2>
+      <div className="grid grid-cols-3 gap-10">
+        {review.map((reviews) => (
+          <div class="card bg-base-100 shadow-xl">
+            <div class="avatar justify-center p-10">
+              <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img src={user?.photoURL || "https://api.lorem.space/image/face?hash=3174"} />
+              </div>
+            </div>
+            <div class="card-body">
+              <h2 class="card-title">{user.displayName}</h2>
+              <p>{reviews.comment}</p>
+              <div class="card-actions justify-end"></div>
+
+              <Rating
+              initialRating={0}
+              placeholderRating={reviews.rating}
+                emptySymbol="fa fa-star-o fa-2x"
+                fullSymbol="fa fa-star fa-2x"
+                className="disabled:"
+              />
+            
+            </div>
           </div>
-        </div>
-        <div class="card-body">
-          <h2 class="card-title">
-            Shoes!
-            <div class="badge badge-secondary">NEW</div>
-          </h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div class="card-actions justify-end">
-            <div class="badge badge-outline">Fashion</div>
-            <div class="badge badge-outline">Products</div>
-          </div>
-          <div class="rating">
-            <input
-              type="radio"
-              name="rating-2"
-              class="mask mask-star-2 bg-orange-400"
-            />
-            <input
-              type="radio"
-              name="rating-2"
-              class="mask mask-star-2 bg-orange-400"
-              checked
-            />
-            <input
-              type="radio"
-              name="rating-2"
-              class="mask mask-star-2 bg-orange-400"
-            />
-            <input
-              type="radio"
-              name="rating-2"
-              class="mask mask-star-2 bg-orange-400"
-            />
-            <input
-              type="radio"
-              name="rating-2"
-              class="mask mask-star-2 bg-orange-400"
-            />
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
