@@ -15,8 +15,9 @@ const Signin = (props) => {
     useSignInWithEmailAndPassword(auth);
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
 
-  const [token] = useToken(user);
+  const [token] = useToken(user || gUser);
 
+  let signInError;
   const location = useLocation();
   const navigate = useNavigate();
   const from = location?.state?.from?.pathname || "/";
@@ -29,9 +30,12 @@ const Signin = (props) => {
       navigate(from, { replace: true });
     }
   }, [token, from, navigate]);
-  if (loading) {
+  if (loading || gLoading) {
     return <Loading></Loading>;
   }
+  if(error || gError){
+    signInError= <p className='text-red-500'><small>{error?.message || gError?.message }</small></p>
+}
   const onSubmit = async (data) => {
     console.log(data);
     await signInWithEmailAndPassword(data.email, data.password);
@@ -88,16 +92,16 @@ const Signin = (props) => {
                   })}
                 />
                 <label className="label">
-                  {/* {errors.password?.type === "required" && (
+                  {errors.password?.type === "required" && (
                     <span className="label-text-alt text-red-500">
                       {errors.password.message}
                     </span>
-                  )} */}
-                  {/* {errors.password?.type === "minLength" && (
+                  )}
+                  {errors.password?.type === "minLength" && (
                     <span className="label-text-alt text-red-500">
                       {errors.password.message}
                     </span>
-                  )} */}
+                  )}
                 </label>
               </div>
 
@@ -117,7 +121,7 @@ const Signin = (props) => {
               </small>
             </p>
             <div className="divider">OR</div>
-            <button onClick={handleGoogleSignIn}>google sign in</button>
+            <button onClick={handleGoogleSignIn} className="btn btn-success">google sign in</button>
           </div>
         </div>
       </div>
