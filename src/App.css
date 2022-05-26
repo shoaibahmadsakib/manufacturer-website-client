@@ -29,3 +29,20 @@
 .error_img img {
   width: 250px;
 }
+
+
+/* media queary */
+@media only screen and (max-width: 600px){
+  .my-margin{
+    margin: 10px;
+  }
+  .tool_design{
+    display: flex;
+    flex-direction: column;
+  }
+  .my_summery , .my_review ,.my_pro{
+    display: flex;
+    flex-direction: column;
+  }
+ 
+}

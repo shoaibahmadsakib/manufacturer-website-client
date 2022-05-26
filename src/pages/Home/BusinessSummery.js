@@ -6,7 +6,7 @@ const BusinessSummery = () => {
       <h2 className="text-center text-4xl font-bold uppercase py-10">
         Business Summery
       </h2>
-      <div className="grid grid-cols-4 gap-7">
+      <div className="grid grid-cols-4 gap-7 my_summery">
         <div class="card shadow-md text-neutral-content">
           <div class="card-body items-center text-center text-black">
             <h2 class="card-title text-blue-400">

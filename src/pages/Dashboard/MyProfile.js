@@ -3,79 +3,132 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 import ProfileInfo from "./ProfileInfo";
+import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
+import Loading from "../../components/Loading";
 
 const MyProfile = () => {
-  const [user] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
+  const [myPro, setMyPro] = useState([]);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm();
 
-  const placeOrderClick = (event) => {
-    event.preventDefault();
-    const email = event.target.email.value;
-    const address = event.target.address.value;
-    const productName = event.target.name.value;
-
-    const totalInfo = { email, productName, address };
-    fetch("http://localhost:5000/profile", {
-      method: "POST",
+  useEffect(() => {
+    const url = `http://localhost:5000/profile`;
+    fetch(url, {
+      method: "GET",
       headers: {
-        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
-      body: JSON.stringify(totalInfo),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
-         
-          toast("success");
-        } else {
-          toast.error("failed");
-        }
+        setMyPro(data);
+      });
+  }, []);
+
+  // if (isLoading || loading) {
+  //   return <Loading />;
+  // }
+  const onSubmit = async (data) => {
+    const phone = data.phone;
+    const edu = data.edu;
+    const city = data.city;
+    const linkedin = data.linkedin;
+
+    fetch(`http://localhost:5000/profile/${user?.email}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify({ phone, edu, city, linkedin }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        toast("update successfully");
       });
   };
-  return (
-    <div>
-      {/* <h2>{user?.displayName}</h2>
-      <p>{user?.email}</p> */}
-      <ProfileInfo />
-      <div>
-        <form action="" onSubmit={placeOrderClick}>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Email</span>
-            </label>
-            <input
-              name="email"
-              type="text"
-              disabled
-              value={user?.email || ""}
-              placeholder="email"
-              class="input input-bordered"
-            />
-            <label class="label">
-              <span class="label-text">address</span>
-            </label>
-            <input
-              name="address"
-              type="text"
-              placeholder="address"
-              class="input input-bordered"
-            />
-            <label class="label">
-              <span class="label-text">Name</span>
-            </label>
-            <input
-              name="name"
-              type="text"
-              placeholder="name"
-              class="input input-bordered"
-            />
-          </div>
 
-          <div class="form-control mt-6">
-            <button class="btn btn-primary">Add info</button>
+  return (
+    <>
+      <h4 className="text text-3xl">My Profile</h4>
+      <div className="grid grid-cols-2 my_pro">
+        <div className="pt-10 pl-10 text-left">
+          <h4> name:{user?.displayName}</h4>
+          <p>email: {user?.email}</p>
+
+          {myPro.map((data) => (
+            <>
+              <p><b> phone Nmber:</b>{data.phone}</p>
+              <p><b>education:</b> {data.edu}</p>
+              <p><b>city:</b> {data.city}</p>
+              <p>
+                <a href={data.linkedin}></a> <b>linkedin:</b> {data.linkedin}
+              </p>
+            </>
+          ))}
+        </div>
+
+        {/*  */}
+
+        <div>
+          <div className="flex h-screen justify-center items-center">
+            <div className="card w-96 bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h2 className="text-center text-2xl font-bold">profile</h2>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="form-control w-full max-w-xs">
+                    <input
+                      type="number"
+                      placeholder="enter your phone number"
+                      className="input input-bordered w-full max-w-xs"
+                      {...register("phone")}
+                    />
+                  </div>
+
+                  <div className="form-control w-full max-w-xs">
+                    <input
+                      type="text"
+                      placeholder="enter your education"
+                      className="input input-bordered w-full max-w-xs"
+                      {...register("edu")}
+                    />
+                  </div>
+                  <div className="form-control w-full max-w-xs">
+                    <input
+                      type="text"
+                      placeholder="enter your city"
+                      className="input input-bordered w-full max-w-xs"
+                      {...register("city")}
+                    />
+                  </div>
+                  <div className="form-control w-full max-w-xs">
+                    <input
+                      type="text"
+                      placeholder="enter your linkedin"
+                      className="input input-bordered w-full max-w-xs"
+                      {...register("linkedin")}
+                    />
+                  </div>
+
+                  <input
+                    className="btn w-full max-w-xs text-white"
+                    type="submit"
+                    value="Update profile"
+                  />
+                </form>
+              </div>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -13,8 +13,8 @@ const Review = () => {
   return (
     <div className="py-10">
       <h2 className="text-center text-4xl font-bold uppercase py-10">Review</h2>
-      <div className="grid grid-cols-3 gap-10">
-        {review.map((reviews) => (
+      <div className="grid grid-cols-3 gap-10 my_review">
+        {review?.map((reviews) => (
           <div class="card bg-base-100 shadow-xl">
             <div class="avatar justify-center p-10">
               <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -22,7 +22,7 @@ const Review = () => {
               </div>
             </div>
             <div class="card-body">
-              <h2 class="card-title">{user.displayName}</h2>
+              <h2 class="card-title">{user?.displayName}</h2>
               <p>{reviews.comment}</p>
               <div class="card-actions justify-end"></div>
 

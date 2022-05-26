@@ -13,7 +13,7 @@ const Blogs = () => {
       </p>
       {/* second question */}
       <h1 className="text-2xl py-8">
-        {" "}
+       
        2: What are the different ways to manage a state in a React application?
       </h1>
       <p>
@@ -81,8 +81,13 @@ const Blogs = () => {
       </p>
       {/*  */}
 
+      <h1 className="text-2xl py-8">4: Why you do not set the state directly in React. For example, if you have const [products, setProducts] = useState([]). Why you do not set products = [...] instead, you use the setProducts</h1>
+      <p className="text-left">
+      useState is a Hook that allows us to set the state of variables in functional components. When we pass the initial state to the function by useState, it returns a variable with the current state value (not necessarily the initial state) and returns another function to update this value. But if we set the state of a variable as mentioned in the question it returns a variable with the initial state it does not return any other function to update the value of the variable.
+      </p>
+      {/* /////////// */}
       <h2 className="text-2xl py-8 text-left">
-      4:  You have an array of products. Each product has a name, price,
+      5:  You have an array of products. Each product has a name, price,
         description, etc. How will you implement a search to find products by
         name?
       </h2>
@@ -92,7 +97,7 @@ const Blogs = () => {
       </div>
 
       <h2 className="text-2xl">
-       5: What is a unit test? Why should write unit tests?
+       6: What is a unit test? Why should write unit tests?
       </h2>
       <p className="text-left">
         The main object of a unit test is for testing a written code and it can
