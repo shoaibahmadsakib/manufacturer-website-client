@@ -19,7 +19,7 @@ const ManageProduct = () => {
   }, []);
 
   const handleDelete = (id) => {
-    console.log(id);
+   
     const confirmDelete = window.confirm("are you sure to delete it?");
     if (confirmDelete) {
       const url = `http://localhost:5000/tools/${id}`;
@@ -28,7 +28,7 @@ const ManageProduct = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+         
           const remaining = myTools.filter((service) => service._id !== id);
           setMyTools(remaining);
         });

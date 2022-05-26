@@ -24,7 +24,7 @@ const MyProfile = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          console.log(data);
+         
           toast("success");
         } else {
           toast.error("failed");
