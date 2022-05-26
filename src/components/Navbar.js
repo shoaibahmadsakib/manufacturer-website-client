@@ -92,7 +92,7 @@ const Navbar = () => {
             </svg>
           </label>
         </div>
-        {/* ========= */}
+       
       <div class="navbar-end hidden lg:flex">
        
         <ul class="menu menu-horizontal p-0">{navItem}</ul>
